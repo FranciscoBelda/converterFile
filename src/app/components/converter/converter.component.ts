@@ -1,25 +1,32 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnInit, Signal} from '@angular/core';
 import {ConverterService} from "../../services/converter.service";
 import * as FileSaver from 'file-saver';
 import {FormsModule} from "@angular/forms";
+import {NgbProgressbarConfig, NgbProgressbarModule} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-converter',
   standalone: true,
   imports: [
-    FormsModule
+    FormsModule,
+    NgbProgressbarModule,
   ],
-  templateUrl: './converter.component.html',
-  styleUrl: './converter.component.css'
+  templateUrl: './converter.component.html'
 })
 export class ConverterComponent implements OnInit{
   private readonly converterService: ConverterService=inject(ConverterService);
-  protected readonly
+  protected readonly page = this.converterService.page;
 
   movies: any[] = [];
   url: string = '';
   data: string = '';
-  constructor() { }
+  constructor(configProgress: NgbProgressbarConfig) {
+    configProgress.max = 500;
+    configProgress.striped = true;
+    configProgress.animated = true;
+    configProgress.type = 'success';
+    configProgress.height = '20px';
+  }
 
   ngOnInit() {
   }

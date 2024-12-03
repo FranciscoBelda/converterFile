@@ -19,5 +19,12 @@
     <div class="d-flex justify-content-center mt-3">
       <button class="btn btn-outline-success" (click)="convertToJson()">ENVIAR</button>
     </div>
+    <div class="d-flex justify-content-center mt-3">
+      <p>{{page()}}</p>
+    </div>
+
+      <ngb-progressbar class="mb-3" [value]="page()" />
+
+
   </div>
 </div>

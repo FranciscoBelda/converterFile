@@ -8,7 +8,7 @@ import {map, Observable} from "rxjs";
 export class ConverterService {
   private readonly http: HttpClient =
     inject(HttpClient);
-  public readonly page = signal(1);
+  public page = signal(1);
 
   constructor() {
   }
