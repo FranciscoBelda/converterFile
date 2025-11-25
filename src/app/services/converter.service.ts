@@ -1,6 +1,6 @@
 import {inject, Injectable, signal} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {map, Observable} from "rxjs";
+import {delay, map, Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -8,12 +8,12 @@ import {map, Observable} from "rxjs";
 export class ConverterService {
   private readonly http: HttpClient =
     inject(HttpClient);
-  public page = signal(1);
+  public page = signal(0);
 
   constructor() {
   }
 
-  loadData(url:string,data:string): Observable<Movie[]> {
+  loadData(url:string,data:string,pages:number): Observable<Movie[]> {
     const movies: Movie[] = [];
     //let page = 1;
 
@@ -21,7 +21,9 @@ export class ConverterService {
 
     const getMoviesByPage = (page: number): Observable<Movie[]> => {
       return this.http.get<any>(url + page).pipe(
+        delay(1000)).pipe(
         map(response => response[data])
+
       );
     };
 
@@ -34,10 +36,8 @@ export class ConverterService {
               next: data => {
                 movies.push(...data);
                 this.page.update(data => data+1);
-                if (this.page() < 501) {
-                  console.log(this.page());
-                  if (this.page() === 500) console.log(movies);
-                  fetchData();
+                if (this.page() <= pages) {
+                 fetchData();
                 } else {
                   console.log('Completed');
                   observer.next(movies);

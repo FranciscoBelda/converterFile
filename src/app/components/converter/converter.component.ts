@@ -16,23 +16,27 @@ import {NgbProgressbarConfig, NgbProgressbarModule} from "@ng-bootstrap/ng-boots
 export class ConverterComponent implements OnInit{
   private readonly converterService: ConverterService=inject(ConverterService);
   protected readonly page = this.converterService.page;
-
+  private readonly configProgress: NgbProgressbarConfig =
+    inject(NgbProgressbarConfig);
   movies: any[] = [];
   url: string = '';
   data: string = '';
-  constructor(configProgress: NgbProgressbarConfig) {
-    configProgress.max = 500;
-    configProgress.striped = true;
-    configProgress.animated = true;
-    configProgress.type = 'success';
-    configProgress.height = '20px';
+  pages: number = 0;
+  constructor() {
+    this.configProgress.max = 500;
+    this.configProgress.striped = true;
+    this.configProgress.animated = true;
+    this.configProgress.type = 'success';
+    this.configProgress.height = '20px';
   }
 
   ngOnInit() {
   }
 
   protected convertToJson() {
-    this.converterService.loadData(this.url, this.data)
+    this.converterService.page.set(1);
+    this.configProgress.max = this.pages;
+    this.converterService.loadData(this.url, this.data, this.pages)
       .subscribe(
       {
         next: value => {

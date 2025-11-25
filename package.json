@@ -1,6 +1,7 @@
 {
   "name": "api-to-json",
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "author": "Francisco Belda",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

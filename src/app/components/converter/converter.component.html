@@ -2,7 +2,6 @@
 <div class="row justify-content-center">
   <div class="col-md-6">
 
-
     <div class="form-floating mb-3">
       <input type="text" class="form-control" [(ngModel)]="url"
              id="dataUrl"
@@ -15,12 +14,22 @@
              placeholder="results">
       <label for="data">Data</label>
     </div>
+    <div class="form-floating">
+      <input type="text" class="form-control"
+             id="pages" [(ngModel)]="pages"
+             placeholder="Pages">
+      <label for="pages">Pages</label>
+    </div>
 
     <div class="d-flex justify-content-center mt-3">
       <button class="btn btn-outline-success" (click)="convertToJson()">ENVIAR</button>
     </div>
     <div class="d-flex justify-content-center mt-3">
-      <p>{{page()}}</p>
+      @if(page()<500){
+        <p>{{page()/5}}%</p>
+      }@else{
+        <h3 class="success">Complete</h3>
+      }
     </div>
 
       <ngb-progressbar class="mb-3" [value]="page()" />
