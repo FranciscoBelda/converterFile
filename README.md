@@ -1,73 +1,73 @@
+# Conversor de Datos API The Movie Database (TMDb) 🎬🍿
 
+Este proyecto demuestra cómo consumir la API REST de **The Movie Database (TMDb)**, procesar la respuesta con información de películas y series, y estructurar/convertir los datos mapeados en formato JSON listo para su almacenamiento, exportación o consumo desde otras aplicaciones.
 
-# ConverterFile - File Processing Utility
+## 🎯 Objetivos del Proyecto
 
-`converterFile` es una herramienta ligera y eficiente diseñada para la conversión y procesamiento de archivos. Este proyecto permite transformar datos entre diferentes formatos (como JSON, CSV, o formatos de texto) facilitando la interoperabilidad entre distintos sistemas o la preparación de datos para análisis.
+* **Consumo de la API de TMDb:** Conexión mediante HTTP utilizando claves de API (API Key / Bearer Token).
+* **Mapeo de Datos:** Conversión de las respuestas JSON originales a objetos/modelos de datos internos.
+* **Procesamiento y Filtrado:** Selección de atributos clave (título, sinopsis, puntuación, géneros, imágenes, fecha de estreno).
+* **Exportación y Formateo JSON:** Serialización personalizada de los datos a archivos `.json` estructurados o almacenamiento en base de datos.
 
-## ✨ Características
+## 🛠️ Tecnologías Utilizadas
 
-* **Conversión Multi-formato**: Soporte para transformar archivos de entrada en diversos formatos de salida.
-* **Procesamiento por Lotes**: Capacidad para manejar múltiples archivos de forma simultánea.
-* **Interfaz Sencilla**: Diseñado para ser utilizado tanto como librería en otros proyectos como herramienta independiente.
-* **Extensible**: Estructura de código preparada para añadir nuevos conversores o reglas de transformación fácilmente.
+* **Lenguaje:** Java / JavaScript (Node.js) / Python *(según implementación)*.
+* **Librerías de Procesamiento JSON:** Jackson / Gson / `JSON.stringify` / `json` módulo.
+* **Cliente HTTP:** Axios / Fetch API / HttpClient / RestTemplate.
+* **API Externa:** [The Movie Database (TMDb) API v3/v4](https://developer.themoviedb.org/).
 
-## 🛠️ Tecnologías
+## 🔑 Configuración del Entorno
 
-* **Node.js**: Entorno de ejecución principal.
-* **TypeScript**: Para un desarrollo robusto con tipado estático.
-* **File System (FS)**: Uso intensivo de las APIs de sistema de archivos para lectura y escritura eficiente.
+1. Registrarse en [TMDb](https://www.themoviedb.org/) y solicitar una clave de API.
+2. Crear un archivo de variables de entorno `.env` (o `application.properties` en caso de Java/Spring Boot):
 
-## 🚀 Instalación
-
-1. **Clonar el repositorio**:
-```bash
-git clone https://github.com/FranciscoBelda/converterFile.git
-cd converterFile
-
+```env
+TMDB_API_KEY=tu_api_key_aqui
+TMDB_BASE_URL=https://api.themoviedb.org/3
 ```
 
-
-2. **Instalar dependencias**:
-```bash
-npm install
+## 🔄 Flujo de Datos
 
 ```
-
-
-3. **Compilar (si usas TypeScript)**:
-```bash
-npm run build
-
+[API TMDb] ---> (Petición HTTP) ---> [Servicio / Parser] ---> (Mapeo & Serialización) ---> [Archivo .json Final]
 ```
 
+1. **Obtención:** Se realiza una petición a endpoints como `/movie/popular`, `/search/movie` o `/movie/{movie_id}`.
+2. **Transformación:** Se seleccionan únicamente los campos requeridos y se formatean fechas o URLs completas de las imágenes (usando `https://image.tmdb.org/t/p/w500`).
+3. **Conversión:** Se serializa el objeto transformado en una cadena/fichero JSON legible y formateado (*pretty print*).
 
+## 📊 Ejemplo de Salida JSON Generado
 
-## 💻 Uso
-
-Para utilizar el conversor, puedes ejecutar el comando principal pasando la ruta del archivo de origen y el formato de destino:
-
-```bash
-npm start -- --input ./datos/archivo.csv --output ./datos/archivo.json
-
+```json
+{
+  "total_resultados": 1,
+  "peliculas": [
+    {
+      "id": 550,
+      "titulo": "Fight Club",
+      "resumen": "Un empleado de oficina insomne y un fabricante de jabón desocupado forman un club de lucha subterráneo...",
+      "puntuacion": 8.4,
+      "fecha_estreno": "1999-10-15",
+      "poster": "https://image.tmdb.org/t/p/w500/pB8BM7pdSp6B1yA9Z4y3fA.jpg"
+    }
+  ]
+}
 ```
 
-*(Nota: Ajustar los comandos según la implementación específica del script principal).*
+## 🚀 Ejecución del Proyecto
 
-## 📂 Estructura del Proyecto
+1. Clonar el repositorio:
+   ```bash
+   git clone <URL_DEL_REPOSITORIO>
+   cd tmdb-json-converter
+   ```
+2. Instalar dependencias según el lenguaje empleado.
+3. Ejecutar el script/servicio principal para procesar las películas y generar los archivos JSON.
 
-* **`/src/converters`**: Contiene la lógica específica para cada tipo de conversión (ej. `csvToJson.ts`).
-* **`/src/models`**: Definición de las interfaces de datos.
-* **`/test`**: Pruebas unitarias para asegurar que la integridad de los datos se mantiene tras la conversión.
+## 👨‍💻 Autor
 
-## 🔧 Configuración
+Creado por **Francisco Belda**.
 
-El proyecto permite configurar límites de tamaño de archivo y rutas por defecto a través de un archivo de configuración o variables de entorno:
+Aprende más sobre APIs REST, consumo de servicios y desarrollo web en su canal de YouTube:
 
-* `MAX_FILE_SIZE`: Límite máximo del archivo a procesar.
-* `OUTPUT_DIR`: Carpeta destino por defecto para los archivos convertidos.
-
----
-
-**Autor:** [Francisco Belda](https://github.com/FranciscoBelda)
-
-**Licencia:** MIT
+👉 [Canal de YouTube de Francisco Belda](https://www.youtube.com/@franciscobelda)
